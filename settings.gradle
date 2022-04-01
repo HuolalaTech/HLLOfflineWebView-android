@@ -1,0 +1,4 @@
+include ':app'
+include ':lib_web'
+include ':lib_offline_webview'
+rootProject.name = "OfflineDemo"

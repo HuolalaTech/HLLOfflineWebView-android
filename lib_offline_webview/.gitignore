@@ -1,0 +1,15 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+build/
+
+# Android Studio导航编辑器临时文件
+.navigation/
+
+# Android Studio captures folder
+captures/

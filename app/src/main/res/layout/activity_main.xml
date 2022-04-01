@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <Switch
+        android:id="@+id/switch_view"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="是否增加监控信息" />
+
+    <TextView
+        android:id="@+id/start1_web"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="5dp"
+        android:background="#e5e5e5"
+        android:gravity="center"
+        android:text="start1_web"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/start2_web"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="5dp"
+        android:background="#e5e5e5"
+        android:gravity="center"
+        android:text="start2_web"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/start3_web"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="5dp"
+        android:background="#e5e5e5"
+        android:gravity="center"
+        android:text="start3_web"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/start4_web"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="5dp"
+        android:background="#e5e5e5"
+        android:gravity="center"
+        android:text="start4_web"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/clean"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="5dp"
+        android:background="#e5e5e5"
+        android:gravity="center"
+        android:text="清理离线包"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/clean_cache"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="5dp"
+        android:background="#e5e5e5"
+        android:gravity="center"
+        android:text="清理webview缓存"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
+
+    <TextView
+        android:id="@+id/update"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="5dp"
+        android:background="#e5e5e5"
+        android:gravity="center"
+        android:text="update_bisname"
+        android:textColor="@color/black"
+        android:textSize="22dp" />
+
+</LinearLayout>
