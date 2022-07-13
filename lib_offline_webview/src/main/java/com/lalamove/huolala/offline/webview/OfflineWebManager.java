@@ -18,6 +18,7 @@ import com.lalamove.huolala.offline.webview.net.IOfflineRequest;
 import com.lalamove.huolala.offline.webview.threadpool.IExecutorServiceProvider;
 import com.lalamove.huolala.offline.webview.resource.ResourceFlow;
 import com.lalamove.huolala.offline.webview.threadpool.OfflineIoThreadPool;
+import com.lalamove.huolala.offline.webview.utils.OffWebRuleUtil;
 import com.lalamove.huolala.offline.webview.utils.OfflineConstant;
 
 import java.util.Collections;
@@ -43,7 +44,7 @@ public class OfflineWebManager {
     /**
      * 离线业务包，检测更新，下载，解压，替换 流程
      */
-    private List<ResourceFlow> mResourceFlows = Collections.synchronizedList(new LinkedList<ResourceFlow>());
+    private List<ResourceFlow> mResourceFlows = Collections.synchronizedList(new LinkedList<>());
 
     /**
      * 页面管理 用于强刷功能
@@ -95,11 +96,11 @@ public class OfflineWebManager {
     private boolean mIsOpen;
 
     public static OfflineWebManager getInstance() {
-        return Holder.instance;
+        return Holder.INSTANCE;
     }
 
     private static class Holder {
-        private static OfflineWebManager instance = new OfflineWebManager();
+        private final static OfflineWebManager INSTANCE = new OfflineWebManager();
     }
 
     private OfflineWebManager() {
@@ -107,10 +108,10 @@ public class OfflineWebManager {
 
     public void init(Context context, OfflineParams offlineParams) {
         mContext = context;
-        mRequest = offlineParams.mRequest;
-        mOfflineConfig = offlineParams.mOfflineConfig;
+        mRequest = offlineParams.getRequest();
+        mOfflineConfig = offlineParams.getOfflineConfig();
         if (mRequest == null || mOfflineConfig == null) {
-            if (offlineParams.mIsDebug) {
+            if (offlineParams.isDebug()) {
                 throw new IllegalStateException("please set base url and env");
             } else {
                 OfflineWebLog.e(TAG, new IllegalStateException("please set base url and env"));
@@ -121,16 +122,17 @@ public class OfflineWebManager {
             mIsInit = false;
             return;
         }
-        mDownLoader = offlineParams.mDownLoader;
-        mExecutorProvider = offlineParams.mExecutorProvider;
-        mIsDebug = offlineParams.mIsDebug;
-        mLogger = offlineParams.mLogger;
-        mMatcher = offlineParams.mMatcher;
-        mInterceptor = offlineParams.mInterceptor == null ? new DefaultInterceptor() : offlineParams.mInterceptor;
+        mDownLoader = offlineParams.getDownLoader();
+        mExecutorProvider = offlineParams.getExecutorProvider();
+        mIsDebug = offlineParams.isDebug();
+        mLogger = offlineParams.getLogger();
+        mMatcher = offlineParams.getMatcher();
+        mInterceptor = offlineParams.getInterceptor() == null ? new DefaultInterceptor() : offlineParams.getInterceptor();
         mIsInit = true;
-        mMonitor = offlineParams.mMonitor;
-        mFlowResultHandleStrategy = offlineParams.mFlowResultHandleStrategy == null
-                ? new FlowResultHandleStrategy() : offlineParams.mFlowResultHandleStrategy;
+        mMonitor = offlineParams.getMonitor();
+        mFlowResultHandleStrategy = offlineParams.getFlowResultHandleStrategy() == null
+                ? new FlowResultHandleStrategy() : offlineParams.getFlowResultHandleStrategy();
+        OffWebRuleUtil.init(offlineParams.getOfflineRuleConfig());
         OfflineWebLog.i(TAG, "init success ");
     }
 

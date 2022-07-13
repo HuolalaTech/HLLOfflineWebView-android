@@ -7,12 +7,8 @@ import org.apache.http.conn.ssl.X509HostnameVerifier;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.KeyManagementException;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
@@ -31,6 +27,9 @@ public class HttpsUtils {
 
     public static KeyStore sKeyStore = null;
     public static SSLParams sSslParams = null;
+
+    private HttpsUtils() {
+    }
 
     public static class SSLParams {
         public SSLSocketFactory sSLSocketFactory;
@@ -59,9 +58,7 @@ public class HttpsUtils {
             sSslParams.sSLSocketFactory = sslContext.getSocketFactory();
             sSslParams.trustManager = trustManager;
             sSslParams.keyStore = sKeyStore;
-        } catch (NoSuchAlgorithmException | KeyManagementException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
         }
         return sSslParams;
@@ -109,13 +106,7 @@ public class HttpsUtils {
                     getInstance(TrustManagerFactory.getDefaultAlgorithm());
             trustManagerFactory.init(sKeyStore);
             return trustManagerFactory.getTrustManagers();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        }  catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -133,16 +124,6 @@ public class HttpsUtils {
             keyManagerFactory.init(clientKeyStore, password.toCharArray());
             return keyManagerFactory.getKeyManagers();
 
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnrecoverableKeyException e) {
-            e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -186,11 +167,7 @@ public class HttpsUtils {
             customX509TrustManager = new HttpsUtils.CustomX509TrustManager();
             sc.init(null, new TrustManager[]{customX509TrustManager}, new SecureRandom());
             return sc.getSocketFactory();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        }  catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -205,7 +182,7 @@ public class HttpsUtils {
             try {
                 ks = KeyStore.getInstance("JKS");
             } catch (Exception e) {
-                Log.e(TAG, "[CustomX509TrustManager] KeyStore.getInstance Exception:" + e.toString());
+                Log.e(TAG, "[CustomX509TrustManager] KeyStore.getInstance Exception:" + e);
             }
             TrustManager[] tms = {};
             if (ks != null) {
@@ -218,13 +195,13 @@ public class HttpsUtils {
                     tms = tmf.getTrustManagers();
                     in.close();
                 } catch (Exception e) {
-                    Log.e(TAG, "[CustomX509TrustManager] getTrustManagers Exception:" + e.toString());
+                    Log.e(TAG, "[CustomX509TrustManager] getTrustManagers Exception:" + e);
                 } finally {
                     if (in != null) {
                         try {
                             in.close();
                         } catch (Exception e) {
-                            Log.e(TAG, "[CustomX509TrustManager] in.close Exception:" + e.toString());
+                            Log.e(TAG, "[CustomX509TrustManager] in.close Exception:" + e);
                         }
                     }
                 }
@@ -235,9 +212,9 @@ public class HttpsUtils {
                 tms = tmf.getTrustManagers();
 
             }
-            for (int i = 0; i < tms.length; i++) {
-                if (tms[i] instanceof X509TrustManager) {
-                    sunJSSEX509TrustManager = (X509TrustManager) tms[i];
+            for (TrustManager tm : tms) {
+                if (tm instanceof X509TrustManager) {
+                    sunJSSEX509TrustManager = (X509TrustManager) tm;
                     return;
                 }
             }

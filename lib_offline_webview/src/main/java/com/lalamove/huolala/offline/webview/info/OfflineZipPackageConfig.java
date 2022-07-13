@@ -1,5 +1,7 @@
 package com.lalamove.huolala.offline.webview.info;
 
+import androidx.annotation.Keep;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,7 +14,7 @@ import java.util.Objects;
  * @history:
  */
 
-
+@Keep
 public class OfflineZipPackageConfig implements Serializable {
 
 

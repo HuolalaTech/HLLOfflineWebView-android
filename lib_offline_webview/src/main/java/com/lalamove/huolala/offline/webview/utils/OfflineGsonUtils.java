@@ -21,6 +21,9 @@ public class OfflineGsonUtils {
 
     private static final Gson GSON;
 
+    private OfflineGsonUtils() {
+    }
+
     static {
         GSON = new GsonBuilder()
                 .serializeNulls() //支持序列化null的参数

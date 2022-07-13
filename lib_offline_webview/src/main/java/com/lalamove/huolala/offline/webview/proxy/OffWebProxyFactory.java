@@ -14,6 +14,9 @@ import com.lalamove.huolala.offline.webview.widget.IOfflineWebView;
 
 public class OffWebProxyFactory {
 
+    private OffWebProxyFactory() {
+    }
+
     public static IOfflineWebViewProxy getProxy(IOfflineWebView webView) {
         if (OfflineWebManager.getInstance().isInit()) {
             return new OfflineWebViewProxy(webView);

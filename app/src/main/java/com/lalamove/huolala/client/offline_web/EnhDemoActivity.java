@@ -13,6 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.lalamove.huolala.offline.webview.widget.EnhOfflineWebView;
 
+/**
+ * @copyright：深圳依时货拉拉科技有限公司
+ * @fileName: EnhDemoActivity
+ * @author: kelvin
+ * @date: 2022/5/13
+ * @description: 带监控的Demo页面
+ * @history:
+ */
 public class EnhDemoActivity extends AppCompatActivity {
 
 
@@ -28,20 +36,12 @@ public class EnhDemoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
+        setContentView(R.layout.off_web_activity_demo);
 
         FrameLayout webContainer = findViewById(R.id.web_container);
         EnhOfflineWebView webView = new EnhOfflineWebView(this);
         webContainer.addView(webView,new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         initWebViewSettings(webView);
-//        webView.setWebViewClient(new WebViewClient(){
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                view.loadUrl(url);
-//                return true;
-//            }
-//
-//        });
 
         if (getIntent() != null) {
             String url = getIntent().getStringExtra("url");

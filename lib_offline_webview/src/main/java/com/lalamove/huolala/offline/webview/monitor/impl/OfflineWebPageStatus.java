@@ -43,6 +43,7 @@ public final class OfflineWebPageStatus implements IWebPageStatus {
                 Uri uri = Uri.parse(url.trim());
                 mBisName = uri.getQueryParameter(OfflineConstant.OFF_WEB);
             } catch (Exception e) {
+                e.printStackTrace();
             }
             mIsOffline = isOffWebUrl(url) && !OfflineWebManager.getInstance().getOfflineConfig().isDisable(mBisName);
             mStartTime = System.currentTimeMillis();
@@ -83,6 +84,7 @@ public final class OfflineWebPageStatus implements IWebPageStatus {
                 OfflineWebMonitorUtils.reportLoadFinish(getSimpleUrl(), mOriginUrl, mBisName, mIsOffline, mStartTime);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         if (!mIsLoadFail) {
             //这边走成功的计数监控
@@ -105,19 +107,6 @@ public final class OfflineWebPageStatus implements IWebPageStatus {
         }
     }
 
-
-   /* @Override
-    public void onH5LoadFinish() {
-        OfflineWebLog.d(this.TAG, "onH5LoadFinish -> startTime --" + this.mStartTime);
-        if (!checkStatus()) {
-            OfflineWebMonitorUtils.reportH5LoadFinish(
-                    mOriginUrl,
-                    mBisName,
-                    mIsOffline,
-                    mStartTime);
-        }
-    }*/
-
     @Override
     public void onLoadError(@Nullable IEnhWebResourceRequestAdapter request, @Nullable IEnhWebResourceErrorAdapter error) {
         if (checkStatus() || request == null || error == null) {
@@ -132,33 +121,31 @@ public final class OfflineWebPageStatus implements IWebPageStatus {
         if (uri == null) {
             return;
         }
-        if (uri != null) {
-            String bisName = uri.getQueryParameter("offweb");
-            String errorStr = (new StringBuilder()).append("code = ")
-                    .append(error.getErrorCode())
-                    .append(", desc = ")
-                    .append(error.getDescription())
-                    .toString();
-            if (isEquals(bisName, mBisName)) {
-                OfflineWebMonitorUtils.reportLoadError(
-                        this.getSimpleUrl(),
-                        this.mOriginUrl,
-                        this.mBisName,
-                        this.mIsOffline,
-                        this.mStartTime,
-                        errorStr,
-                        String.valueOf(error.getErrorCode()));
-                OfflineWebMonitorUtils.monitorLoadTime(
-                        this.mOriginUrl,
-                        this.mBisName,
-                        this.mIsOffline,
-                        this.mStartTime,
-                        String.valueOf(error.getErrorCode()));
-            } else {
-                this.offlineErrorMonitor(errorStr, String.valueOf(error.getErrorCode()));
-            }
-            loadFailStatus();
+        String bisName = uri.getQueryParameter("offweb");
+        String errorStr = (new StringBuilder()).append("code = ")
+                .append(error.getErrorCode())
+                .append(", desc = ")
+                .append(error.getDescription())
+                .toString();
+        if (isEquals(bisName, mBisName)) {
+            OfflineWebMonitorUtils.reportLoadError(
+                    this.getSimpleUrl(),
+                    this.mOriginUrl,
+                    this.mBisName,
+                    this.mIsOffline,
+                    this.mStartTime,
+                    errorStr,
+                    String.valueOf(error.getErrorCode()));
+            OfflineWebMonitorUtils.monitorLoadTime(
+                    this.mOriginUrl,
+                    this.mBisName,
+                    this.mIsOffline,
+                    this.mStartTime,
+                    String.valueOf(error.getErrorCode()));
+        } else {
+            this.offlineErrorMonitor(errorStr, String.valueOf(error.getErrorCode()));
         }
+        loadFailStatus();
     }
 
     @Override

@@ -21,7 +21,7 @@ public class ParamsUtil {
             return null;
         }
         try {
-            String params = url.substring(url.indexOf("?") + 1, url.length());
+            String params = url.substring(url.indexOf("?") + 1);
             return Splitter.on("&")
                     .withKeyValueSeparator("=")
                     .split(params);

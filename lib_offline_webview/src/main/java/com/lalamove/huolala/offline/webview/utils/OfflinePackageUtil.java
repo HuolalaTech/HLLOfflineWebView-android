@@ -17,6 +17,9 @@ import java.io.File;
 
 public class OfflinePackageUtil {
 
+    private OfflinePackageUtil() {
+    }
+
     public static OfflineZipPackageConfig getOfflineConfig(String bisName) {
         String configJsonStr = OfflineFileUtils.readFile2String(getBisDir(bisName)+File.separator+OfflineConstant.CUR_DIR_NAME
                 + File.separator + OfflineConstant.CONFIG_FILE_NAME);

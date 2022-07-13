@@ -15,4 +15,6 @@ public interface Constants {
     String BASE_URL = "";
     String LOCALHOST = ServerConstant.LOCALHOST;
     String LOCAL_BASE_URL = LOCALHOST + ServerConstant.PATH_OFF_WEB;
+
+    String RULE_CONFIG = "{\"rules\":[{\"path\":[\"/uapp\"],\"offweb\":\"uappweb-offline\",\"host\":[\"www.huolala.cn\"],\"fragmentprefix\":[\"/xxxxxx\",\"/cd-index\"]},{\"path\":[\"/van/act3-turntable-x\"],\"offweb\":\"act3-2108-turntable\",\"host\":[\"www.huolala.cn\",\"www.baidu.com\"]}]}";
 }

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -29,14 +30,11 @@ public class DownloadHandler implements HttpHandler {
             System.out.println("download bisName = " + bisName);
             if (ServerConstant.NAME_ACT3.equals(bisName)) {
                 zipFile = new File(ServerConstant.ACT3_PATH);
-            } else if (ServerConstant.NAME_UAPPWEB_OFFLINE.equals(bisName)) {
-                zipFile = new File(ServerConstant.UAPPWEB_OFFLINE_PATH);
             }
             if (zipFile != null) {
                 System.out.println("download path = " + zipFile.getAbsolutePath());
             }
-            String fileName = bisName;
-            handleResponse(httpExchange, zipFile, fileName);
+            handleResponse(httpExchange, zipFile, bisName);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -52,14 +50,14 @@ public class DownloadHandler implements HttpHandler {
     private String getRequestParam(HttpExchange httpExchange) throws Exception {
         String paramStr = "";
 
-        if (httpExchange.getRequestMethod().equals("GET")) {
+        if ("GET".equals(httpExchange.getRequestMethod())) {
             //GET请求读queryString
             paramStr = httpExchange.getRequestURI().getQuery();
         } else {
             //非GET请求读请求体
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody(), "utf-8"));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody(), StandardCharsets.UTF_8));
             StringBuilder requestBodyContent = new StringBuilder();
-            String line = null;
+            String line = "";
             while ((line = bufferedReader.readLine()) != null) {
                 requestBodyContent.append(line);
             }

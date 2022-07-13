@@ -22,39 +22,41 @@ public final class EnhWebResourceRequestAdapterImpl implements IEnhWebResourceRe
     @Override
     @Nullable
     public Uri getUrl() {
-        WebResourceRequest var10000;
+        WebResourceRequest resourceRequest;
         if (this.webkitRequest != null) {
-            var10000 = this.webkitRequest;
-            return var10000.getUrl();
+            resourceRequest = this.webkitRequest;
+            return resourceRequest.getUrl();
         } else if (this.smttRequest != null) {
-            var10000 = this.smttRequest;
-            return var10000.getUrl();
+            resourceRequest = this.smttRequest;
+            return resourceRequest.getUrl();
         } else {
             return null;
         }
     }
 
+    @Override
     public boolean isForMainFrame() {
-        WebResourceRequest var10000;
+        WebResourceRequest resourceRequest;
         if (this.webkitRequest != null) {
-            var10000 = this.webkitRequest;
-            return var10000.isForMainFrame();
+            resourceRequest = this.webkitRequest;
+            return resourceRequest.isForMainFrame();
         } else if (this.smttRequest != null) {
-            var10000 = this.smttRequest;
-            return var10000.isForMainFrame();
+            resourceRequest = this.smttRequest;
+            return resourceRequest.isForMainFrame();
         } else {
             return false;
         }
     }
 
+    @Override
     public boolean hasGesture() {
-        WebResourceRequest var10000;
+        WebResourceRequest resourceRequest;
         if (this.webkitRequest != null) {
-            var10000 = this.webkitRequest;
-            return var10000.hasGesture();
+            resourceRequest = this.webkitRequest;
+            return resourceRequest.hasGesture();
         } else if (this.smttRequest != null) {
-            var10000 = this.smttRequest;
-            return var10000.hasGesture();
+            resourceRequest = this.smttRequest;
+            return resourceRequest.hasGesture();
         } else {
             return false;
         }
@@ -63,13 +65,13 @@ public final class EnhWebResourceRequestAdapterImpl implements IEnhWebResourceRe
     @Override
     @Nullable
     public String getMethod() {
-        WebResourceRequest var10000;
+        WebResourceRequest resourceRequest;
         if (this.webkitRequest != null) {
-            var10000 = this.webkitRequest;
-            return var10000.getMethod();
+            resourceRequest = this.webkitRequest;
+            return resourceRequest.getMethod();
         } else if (this.smttRequest != null) {
-            var10000 = this.smttRequest;
-            return var10000.getMethod();
+            resourceRequest = this.smttRequest;
+            return resourceRequest.getMethod();
         } else {
             return null;
         }
@@ -78,13 +80,13 @@ public final class EnhWebResourceRequestAdapterImpl implements IEnhWebResourceRe
     @Override
     @Nullable
     public Map<String, String> getRequestHeaders() {
-        WebResourceRequest var10000;
+        WebResourceRequest resourceRequest;
         if (this.webkitRequest != null) {
-            var10000 = this.webkitRequest;
-            return var10000.getRequestHeaders();
+            resourceRequest = this.webkitRequest;
+            return resourceRequest.getRequestHeaders();
         } else if (this.smttRequest != null) {
-            var10000 = this.smttRequest;
-            return var10000.getRequestHeaders();
+            resourceRequest = this.smttRequest;
+            return resourceRequest.getRequestHeaders();
         } else {
             return null;
         }

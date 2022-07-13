@@ -14,13 +14,13 @@ public final class EnhWebResourceResponseAdapterImpl implements IEnhWebResourceR
 
     @Override
     public int getStatusCode() {
-        WebResourceResponse var10000;
+        WebResourceResponse resourceResponse;
         if (this.webkitResponse != null) {
-            var10000 = this.webkitResponse;
-            return var10000.getStatusCode();
+            resourceResponse = this.webkitResponse;
+            return resourceResponse.getStatusCode();
         } else if (this.smttResponse != null) {
-            var10000 = this.smttResponse;
-            return var10000.getStatusCode();
+            resourceResponse = this.smttResponse;
+            return resourceResponse.getStatusCode();
         } else {
             return -1;
         }
@@ -29,13 +29,13 @@ public final class EnhWebResourceResponseAdapterImpl implements IEnhWebResourceR
     @Override
     @Nullable
     public String getReasonPhrase() {
-        WebResourceResponse var10000;
+        WebResourceResponse webResourceResponse;
         if (this.webkitResponse != null) {
-            var10000 = this.webkitResponse;
-            return var10000.getReasonPhrase();
+            webResourceResponse = this.webkitResponse;
+            return webResourceResponse.getReasonPhrase();
         } else if (this.smttResponse != null) {
-            var10000 = this.smttResponse;
-            return var10000.getReasonPhrase();
+            webResourceResponse = this.smttResponse;
+            return webResourceResponse.getReasonPhrase();
         } else {
             return null;
         }

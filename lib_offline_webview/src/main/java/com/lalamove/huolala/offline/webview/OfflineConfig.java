@@ -1,5 +1,7 @@
 package com.lalamove.huolala.offline.webview;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -14,29 +16,32 @@ import java.util.HashSet;
 
 public class OfflineConfig {
 
+    @SerializedName("isOpen")
     private boolean isOpen;
-    private HashSet<String> predownloadlist;
-    private HashSet<String> disablelist;
+    @SerializedName("predownloadlist")
+    private HashSet<String> mPreDownloadList;
+    @SerializedName("disablelist")
+    private HashSet<String> disableList;
 
-    public OfflineConfig(boolean isOpen, HashSet<String> predownloadlist, HashSet<String> disablelist) {
+    public OfflineConfig(boolean isOpen, HashSet<String> preDownloadList, HashSet<String> disableList) {
         this.isOpen = isOpen;
-        this.predownloadlist = predownloadlist;
-        this.disablelist = disablelist;
+        this.mPreDownloadList = preDownloadList;
+        this.disableList = disableList;
     }
 
     public boolean isOpen() {
         return isOpen;
     }
 
-    public HashSet<String> getPredownloadlist() {
-        return predownloadlist;
+    public HashSet<String> getPreDownloadList() {
+        return mPreDownloadList;
     }
 
     public boolean isDisable(String bisName) {
-        if (disablelist == null || disablelist.size() == 0) {
+        if (disableList == null || disableList.size() == 0) {
             return false;
         }
-        return disablelist.contains(bisName);
+        return disableList.contains(bisName);
     }
 
     public static class Builder {
@@ -46,7 +51,7 @@ public class OfflineConfig {
 
         public Builder(boolean isOpen) {
             this.isOpen = isOpen;
-            predownloadlist = new HashSet<String>();
+            predownloadlist = new HashSet<>();
             disablelist = new HashSet<>();
         }
 

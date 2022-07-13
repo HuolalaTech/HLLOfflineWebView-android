@@ -13,6 +13,9 @@ import com.lalamove.huolala.offline.webview.OfflineWebManager;
 
 public class OfflineWebLog {
 
+    private OfflineWebLog() {
+    }
+
     private static final String DEFAULT_TAG = "OffLineWeb_";
 
     public static void e(String tag, String content) {
@@ -31,8 +34,8 @@ public class OfflineWebLog {
                 try {
                     tag = Thread.currentThread().getName() + "-" + tag;
                     android.util.Log.e(DEFAULT_TAG + tag, t.getMessage());
-                }catch (Exception e){
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         } else {

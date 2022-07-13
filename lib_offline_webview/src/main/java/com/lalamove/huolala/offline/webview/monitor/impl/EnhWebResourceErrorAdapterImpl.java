@@ -16,8 +16,8 @@ import com.lalamove.huolala.offline.webview.monitor.base.IEnhWebResourceErrorAda
 
 public class EnhWebResourceErrorAdapterImpl extends IEnhWebResourceErrorAdapter {
 
-    WebResourceError webkitError;
-    WebResourceError smttError;
+    private WebResourceError webkitError;
+    private WebResourceError smttError;
 
     public EnhWebResourceErrorAdapterImpl(WebResourceError webkitError, WebResourceError smttError) {
         this.webkitError = webkitError;

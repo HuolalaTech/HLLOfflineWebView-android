@@ -44,6 +44,9 @@ public class OfflineFileUtils {
     private static final char[] HEX_DIGITS_LOWER =
             {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
+    private OfflineFileUtils() {
+    }
+
     public static String getInternalAppDataPath() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return OfflineWebManager.getInstance().getContext().getApplicationInfo().dataDir;
@@ -154,22 +157,11 @@ public class OfflineFileUtils {
             if (!createOrExistsFile(file)) {
                 return false;
             }
-            InputStream in = null;
-            OutputStream out = null;
-            try {
-                in = new BufferedInputStream(zip.getInputStream(entry));
-                out = new BufferedOutputStream(new FileOutputStream(file));
+            try (InputStream in = new BufferedInputStream(zip.getInputStream(entry)); OutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
                 byte[] buffer = new byte[BUFFER_LEN];
                 int len;
                 while ((len = in.read(buffer)) != -1) {
                     out.write(buffer, 0, len);
-                }
-            } finally {
-                if (in != null) {
-                    in.close();
-                }
-                if (out != null) {
-                    out.close();
                 }
             }
         }
@@ -309,13 +301,7 @@ public class OfflineFileUtils {
             return false;
         }
         File file = new File(filePath);
-        if (file == null) {
-            return false;
-        }
-        if (file.exists()) {
-            return true;
-        }
-        return false;
+        return file.exists();
     }
 
     public static long getFileSize(final File file) {

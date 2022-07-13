@@ -12,9 +12,16 @@ import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.lalamove.huolala.offline.webview.widget.EnhOfflineWebView;
 import com.lalamove.huolala.offline.webview.widget.OfflineWebView;
 
+/**
+ * @copyright：深圳依时货拉拉科技有限公司
+ * @fileName: DemoActivity
+ * @author: kelvin
+ * @date: 2022/5/13
+ * @description: Demo页面
+ * @history:
+ */
 public class DemoActivity extends AppCompatActivity {
 
 
@@ -30,7 +37,7 @@ public class DemoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
+        setContentView(R.layout.off_web_activity_demo);
 
         FrameLayout webContainer = findViewById(R.id.web_container);
         OfflineWebView webView = new OfflineWebView(this);

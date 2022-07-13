@@ -22,13 +22,15 @@ import com.lalamove.huolala.offline.webview.utils.OfflinePackageUtil;
 public class CheckAndUpdateTask implements Runnable {
     private static final String TAG = CheckAndUpdateTask.class.getSimpleName();
     private String mBisName;
+    private ResourceFlow.FlowListener mListener;
 
-    public CheckAndUpdateTask(String bisName) {
+    public CheckAndUpdateTask(String bisName,final ResourceFlow.FlowListener listener) {
         mBisName = bisName;
+        mListener = listener;
     }
 
     /**
-     * 单线程 线程池？
+     * 单线程
      */
     @Override
     public void run() {
@@ -57,12 +59,17 @@ public class CheckAndUpdateTask implements Runnable {
                 @Override
                 public void done(OfflinePackageInfo packageInfo) {
                     OfflineWebLog.i(TAG, "done :");
+                    if (mListener != null) {
+                        mListener.done(packageInfo);
+                    }
                     doneFlow(packageInfo);
                 }
 
                 @Override
                 public void error(OfflinePackageInfo packageInfo, Throwable throwable) {
-
+                    if (mListener != null) {
+                        mListener.error(packageInfo, throwable);
+                    }
                     doneFlow(packageInfo);
                     OfflineWebLog.i(TAG, "error");
 

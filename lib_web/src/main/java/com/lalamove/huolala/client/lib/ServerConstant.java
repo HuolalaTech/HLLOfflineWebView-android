@@ -14,11 +14,11 @@ import java.io.File;
 public interface ServerConstant {
 
 
-    String LOCALHOST = "http://172.20.197.41:9999/";
+    String LOCALHOST = "http://xxx.xxx.xxx.xxx:8888/";
 
     String BIS_NAME = "bisName";
 
-    String PATH_OFF_WEB = "offweb";
+    String PATH_OFF_WEB = "queryOffline";
 
     String PAHT_PACKAGE = "package";
 
@@ -28,14 +28,8 @@ public interface ServerConstant {
 
     String NAME_ACT3 = "act3-2108-turntable";
 
-    String PKG_ACT3 = "48559-11no5bw.zip";
-
-    String NAME_UAPPWEB_OFFLINE = "uappweb-offline";
-
-    String PKG_UAPPWEB_OFFLINE = "111204-c4k7hh_1.zip";
+    String PKG_ACT3 = "act3-2108-turntable.zip";
 
     String ACT3_PATH = ASSETS_PATH + File.separator + PKG_ACT3;
-
-    String UAPPWEB_OFFLINE_PATH = ASSETS_PATH + File.separator + PKG_UAPPWEB_OFFLINE;
 
 }

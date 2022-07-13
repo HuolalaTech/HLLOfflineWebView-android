@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.lalamove.huolala.offline.webview.log.OfflineWebLog;
 import com.lalamove.huolala.offline.webview.task.CheckAndUpdateTask;
+import com.lalamove.huolala.offline.webview.utils.OffWebRuleUtil;
 import com.lalamove.huolala.offline.webview.utils.OfflineHandlerUtils;
 import com.lalamove.huolala.offline.webview.utils.OfflineConstant;
 import com.lalamove.huolala.offline.webview.OfflineWebManager;
@@ -27,9 +28,7 @@ public class OfflineWebViewProxy implements IOfflineWebViewProxy {
     private static final String TAG = OfflineWebViewProxy.class.getSimpleName();
     private IOfflineWebView mIOfflineWebView;
     private String mBisName;
-    private String mOriginUrl;
     private boolean mIsOffline;
-    private long mStartTime;
 
     public OfflineWebViewProxy(IOfflineWebView iOfflineWebView) {
         mIOfflineWebView = iOfflineWebView;
@@ -42,14 +41,13 @@ public class OfflineWebViewProxy implements IOfflineWebViewProxy {
 
     @Override
     public String loadUrl(String url) {
-
+        url = OffWebRuleUtil.addOfflineParam(url);
         String offlineRes = url;
         if (isOffWebUrl(url)) {
             try {
                 Uri uri = Uri.parse(url.trim());
                 mBisName = uri.getQueryParameter(OfflineConstant.OFF_WEB);
                 if (!"http".equalsIgnoreCase(uri.getScheme()) && !"https".equalsIgnoreCase(uri.getScheme())) {
-                    mStartTime = System.currentTimeMillis();
                     return url;
                 }
             } catch (Exception e) {
@@ -58,19 +56,16 @@ public class OfflineWebViewProxy implements IOfflineWebViewProxy {
 
             OfflineWebLog.i(TAG, url);
             if (TextUtils.isEmpty(mBisName)) {
-                mStartTime = System.currentTimeMillis();
                 return url;
             }
             if (OfflineWebManager.getInstance().getOfflineConfig().isDisable(mBisName)) {
-                mStartTime = System.currentTimeMillis();
                 OfflineWebLog.i(TAG, "is disabled:" + mBisName);
                 return url;
             }
-            mOriginUrl = url;
 
             offlineRes = OfflineWebManager.getInstance().getOfflineRes(url);
             OfflineWebLog.i(TAG, "match url :" + offlineRes);
-            OfflineWebManager.getInstance().getExecutor().execute(new CheckAndUpdateTask(mBisName));
+            OfflineWebManager.getInstance().getExecutor().execute(new CheckAndUpdateTask(mBisName, null));
 
             mIsOffline = !url.equals(offlineRes);
             if (OfflineWebManager.getInstance().isDebug()) {
@@ -85,7 +80,6 @@ public class OfflineWebViewProxy implements IOfflineWebViewProxy {
             OfflineWebManager.getInstance().getPageManager().addPage(this);
         }
 
-        mStartTime = System.currentTimeMillis();
         return offlineRes;
     }
 
@@ -117,7 +111,6 @@ public class OfflineWebViewProxy implements IOfflineWebViewProxy {
             OfflineWebLog.i(TAG, "destroy");
             OfflineWebManager.getInstance().getPageManager().remove(this);
         }
-
     }
 
 }

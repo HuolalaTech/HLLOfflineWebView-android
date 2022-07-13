@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.lalamove.huolala.offline.webview.OfflineWebManager;
 import com.lalamove.huolala.offline.webview.flow.FlowReportParams;
 import com.lalamove.huolala.offline.webview.monitor.base.IEnhWebMonitor;
+import com.lalamove.huolala.offline.webview.utils.EnhWebUriUtils;
 
 import java.util.HashMap;
 
@@ -15,8 +16,12 @@ import java.util.HashMap;
 
 public class OfflineWebMonitorUtils {
 
+
+    private OfflineWebMonitorUtils() {
+    }
+
     public static void reportFlowParams(FlowReportParams params) {
-        HashMap hashMap = new HashMap<String, Object>(14);
+        HashMap<String, Object> hashMap = new HashMap<>(12);
         hashMap.put("bisName", params.getBisName());
         hashMap.put("queryTime", params.getQueryTime());
         hashMap.put("queryResult", params.getQueryResult());
@@ -35,23 +40,6 @@ public class OfflineWebMonitorUtils {
         }
     }
 
-//    public static void reportH5LoadFinish(
-//            String originUrl,
-//            String bisName,
-//            boolean isOffline,
-//            long startTime
-//    ) {
-//        HashMap hashMap = new HashMap<String, Object>(4);
-//        hashMap.put("url", originUrl);
-//        hashMap.put("bisName", bisName);
-//        hashMap.put("isOffweb", isOffline ? "1" : "0");
-//        hashMap.put("loadTime", System.currentTimeMillis() - startTime);
-//        IEnhWebMonitor monitor = OfflineWebViewManager.getInstance().getMonitor();
-//        if (monitor != null) {
-//            monitor.report("offweb_total_time", hashMap);
-//        }
-//    }
-
     public static void reportLoadError(
             String simpleUrl,
             String originUrl,
@@ -61,7 +49,7 @@ public class OfflineWebMonitorUtils {
             String error,
             String errorCode
     ) {
-        HashMap hashMap = new HashMap<String, Object>(9);
+        HashMap<String, Object> hashMap = new HashMap<>(8);
         hashMap.put("simpleUrl", simpleUrl);
         hashMap.put("url", originUrl);
         hashMap.put("bisName", bisName);
@@ -83,7 +71,7 @@ public class OfflineWebMonitorUtils {
             boolean isOffline,
             long startTime
     ) {
-        HashMap hashMap = new HashMap<String, Object>(9);
+        HashMap<String, Object> hashMap = new HashMap<>(7);
         hashMap.put("simpleUrl", simpleUrl);
         hashMap.put("url", originUrl);
         hashMap.put("bisName", bisName);
@@ -107,10 +95,10 @@ public class OfflineWebMonitorUtils {
             long startTime,
             String resultCode
     ) {
-        HashMap hashMap = new HashMap<String, Object>(4);
+        HashMap<String, Object> hashMap = new HashMap<>(4);
         //(网络请求为https，走离线包为file)
-//        hashMap.put("scheme", isOffline? "file": (EnhWebUriUtils.getScheme(originUrl) ?:""));
-//        hashMap.put("url", EnhWebUriUtils.getMonitorUrl(originUrl));
+        hashMap.put("scheme", isOffline? "file": EnhWebUriUtils.getScheme(originUrl));
+        hashMap.put("url", EnhWebUriUtils.getMonitorUrl(originUrl));
         hashMap.put("bisName", TextUtils.isEmpty(bisName) ? "" : bisName);
         hashMap.put("result", TextUtils.isEmpty(resultCode) ? "-1" : resultCode);
         IEnhWebMonitor monitor = OfflineWebManager.getInstance().getMonitor();

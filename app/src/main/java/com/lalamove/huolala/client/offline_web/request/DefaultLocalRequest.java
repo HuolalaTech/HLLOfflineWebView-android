@@ -79,7 +79,7 @@ public class DefaultLocalRequest implements IOfflineRequest {
         urlBuilder.addQueryParameter(OfflineConstant.BIS_NAME, bizName)
                 .addQueryParameter(OfflineConstant.PARAM_OFFLINE_ZIP_VER, version);
         HttpUrl url = urlBuilder.build();
-        OfflineWebLog.i(TAG, "fetch url：" + url.toString());
+        OfflineWebLog.i(TAG, "fetch url：" + url);
         return new Request.Builder()
                 .url(url)
                 .get()

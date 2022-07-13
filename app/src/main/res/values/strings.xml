@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">OfflineDemo</string>
+    <string name="update">检查更新</string>
+    <string name="open_monitor_web">打开带监控的WebView</string>
+    <string name="clean_pkg">清理离线包</string>
+    <string name="open_normal_web">打开普通WebView</string>
+    <string name="close">关闭</string>
 </resources>

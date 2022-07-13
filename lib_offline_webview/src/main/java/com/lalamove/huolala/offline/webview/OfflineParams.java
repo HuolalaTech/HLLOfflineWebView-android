@@ -1,36 +1,44 @@
 package com.lalamove.huolala.offline.webview;
 
+import android.text.TextUtils;
+
 import com.lalamove.huolala.offline.webview.Interceptor.IInterceptor;
 import com.lalamove.huolala.offline.webview.download.IDownLoader;
 import com.lalamove.huolala.offline.webview.flow.IFlowResultHandleStrategy;
+import com.lalamove.huolala.offline.webview.info.OfflineRuleConfig;
 import com.lalamove.huolala.offline.webview.log.Logger;
 import com.lalamove.huolala.offline.webview.matcher.BisNameMatcher;
 import com.lalamove.huolala.offline.webview.monitor.base.IEnhWebMonitor;
 import com.lalamove.huolala.offline.webview.net.IOfflineRequest;
 import com.lalamove.huolala.offline.webview.threadpool.IExecutorServiceProvider;
+import com.lalamove.huolala.offline.webview.utils.OfflineGsonUtils;
+
+import java.util.List;
 
 
 public class OfflineParams {
 
-    Logger mLogger;
+    private Logger mLogger;
 
-    IExecutorServiceProvider mExecutorProvider;
+    private IExecutorServiceProvider mExecutorProvider;
 
-    boolean mIsDebug;
+    private boolean mIsDebug;
 
-    IDownLoader mDownLoader;
+    private IDownLoader mDownLoader;
 
-    BisNameMatcher mMatcher;
+    private BisNameMatcher mMatcher;
 
-    IInterceptor mInterceptor;
+    private IInterceptor mInterceptor;
 
-    IFlowResultHandleStrategy mFlowResultHandleStrategy;
+    private IFlowResultHandleStrategy mFlowResultHandleStrategy;
 
-    OfflineConfig mOfflineConfig;
+    private OfflineConfig mOfflineConfig;
 
-    IOfflineRequest mRequest;
+    private IOfflineRequest mRequest;
 
-    IEnhWebMonitor mMonitor;
+    private IEnhWebMonitor mMonitor;
+
+    private OfflineRuleConfig mOfflineRuleConfig;
 
     public OfflineParams config(OfflineConfig offlineConfig) {
         mOfflineConfig = offlineConfig;
@@ -81,5 +89,74 @@ public class OfflineParams {
     public OfflineParams monitor(IEnhWebMonitor monitor) {
         mMonitor = monitor;
         return this;
+    }
+
+    public OfflineParams setRule(OfflineRuleConfig offlineRuleConfig) {
+        mOfflineRuleConfig = offlineRuleConfig;
+        return this;
+    }
+
+    public OfflineParams setRule(String ruleJson) {
+        mOfflineRuleConfig = OfflineGsonUtils.fromJson(ruleJson, OfflineRuleConfig.class);
+        return this;
+    }
+
+
+    public OfflineParams addRule(String offweb, List<String> host, List<String> path, List<String> fragmentprefix) {
+        if (TextUtils.isEmpty(offweb) ||
+                host == null || host.size() == 0 ||
+                path == null || path.size() == 0) {
+            return this;
+        }
+
+        if (mOfflineRuleConfig == null) {
+            mOfflineRuleConfig = new OfflineRuleConfig();
+        }
+        mOfflineRuleConfig.addRule(new OfflineRuleConfig.RulesInfo(offweb, host, path, fragmentprefix));
+        return this;
+    }
+
+    public Logger getLogger() {
+        return mLogger;
+    }
+
+    public IExecutorServiceProvider getExecutorProvider() {
+        return mExecutorProvider;
+    }
+
+    public boolean isDebug() {
+        return mIsDebug;
+    }
+
+    public IDownLoader getDownLoader() {
+        return mDownLoader;
+    }
+
+    public BisNameMatcher getMatcher() {
+        return mMatcher;
+    }
+
+    public IInterceptor getInterceptor() {
+        return mInterceptor;
+    }
+
+    public IFlowResultHandleStrategy getFlowResultHandleStrategy() {
+        return mFlowResultHandleStrategy;
+    }
+
+    public OfflineConfig getOfflineConfig() {
+        return mOfflineConfig;
+    }
+
+    public IOfflineRequest getRequest() {
+        return mRequest;
+    }
+
+    public IEnhWebMonitor getMonitor() {
+        return mMonitor;
+    }
+
+    public OfflineRuleConfig getOfflineRuleConfig() {
+        return mOfflineRuleConfig;
     }
 }

@@ -11,6 +11,9 @@ package com.lalamove.huolala.offline.webview.utils;
 
 public class OfflineStringUtils {
 
+    private OfflineStringUtils() {
+    }
+
     public static String getErrorString(Throwable t) {
         if (t == null) {
             return "UnknownError";
@@ -20,5 +23,13 @@ public class OfflineStringUtils {
         } catch (Exception e) {
             return "UnknownError";
         }
+    }
+
+    public static String appendUnsafeString(String... args) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String arg : args) {
+            stringBuilder.append(arg);
+        }
+        return stringBuilder.toString();
     }
 }

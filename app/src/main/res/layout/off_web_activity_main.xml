@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/off_web_main_bg" />
+
+    <ImageView
+        android:id="@+id/icon_iv"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="125dp"
+        android:src="@drawable/off_web_logo_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/logo_iv"
+        android:layout_width="99dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/off_web_name_logo_img"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icon_iv" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="离线包Demo"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_iv" />
+
+
+    <com.lalamove.huolala.client.offline_web.widget.OffWebButton
+        android:id="@+id/open_normal_btn"
+        style="@style/offweb_btn_style"
+        app:image="@drawable/off_web_cash_icon"
+        app:layout_constraintBottom_toTopOf="@id/open_ehn_web"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:text="@string/open_normal_web" />
+
+
+    <com.lalamove.huolala.client.offline_web.widget.OffWebButton
+        android:id="@+id/open_ehn_web"
+        style="@style/offweb_btn_style"
+        app:image="@drawable/off_web_avatar_icon"
+        app:layout_constraintBottom_toTopOf="@id/update_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:text="@string/open_monitor_web" />
+
+
+    <com.lalamove.huolala.client.offline_web.widget.OffWebButton
+        android:id="@+id/update_btn"
+        style="@style/offweb_btn_style"
+        app:image="@drawable/off_web_update_icon"
+        app:layout_constraintBottom_toTopOf="@id/clean_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:text="@string/update" />
+
+    <com.lalamove.huolala.client.offline_web.widget.OffWebButton
+        android:id="@+id/clean_btn"
+        style="@style/offweb_btn_style"
+        android:layout_marginBottom="57dp"
+        app:image="@drawable/off_web_navigation_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:text="@string/clean_pkg" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -20,9 +21,13 @@ public class OffWebHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) {
         try {
             String requestParam = getRequestParam(httpExchange);
+            String bisName ="";
+            String zipVersion ="";
             Map<String, String> paramMap = ParamsUtil.getParamMap(requestParam);
-            String bisName = paramMap.get(ServerConstant.BIS_NAME);
-            String zipVersion = paramMap.get(ServerConstant.PARAM_OFFLINE_ZIP_VER);
+            if (paramMap != null) {
+                bisName = paramMap.get(ServerConstant.BIS_NAME);
+                zipVersion = paramMap.get(ServerConstant.PARAM_OFFLINE_ZIP_VER);
+            }
             String downloadUrl = null;
             if (ServerConstant.NAME_ACT3.equals(bisName)) {
                 StringBuilder downloadSb = new StringBuilder();
@@ -32,15 +37,6 @@ public class OffWebHandler implements HttpHandler {
                         .append(ServerConstant.BIS_NAME)
                         .append("=")
                         .append(ServerConstant.NAME_ACT3);
-                downloadUrl = downloadSb.toString();
-            } else if (ServerConstant.NAME_UAPPWEB_OFFLINE.equals(bisName)) {
-                StringBuilder downloadSb = new StringBuilder();
-                downloadSb.append(ServerConstant.LOCALHOST)
-                        .append(ServerConstant.PAHT_PACKAGE)
-                        .append("?")
-                        .append(ServerConstant.BIS_NAME)
-                        .append("=")
-                        .append(ServerConstant.NAME_UAPPWEB_OFFLINE);
                 downloadUrl = downloadSb.toString();
             }
             //result==1
@@ -55,19 +51,6 @@ public class OffWebHandler implements HttpHandler {
         }
     }
 
-//    /**
-//     * 获取请求头
-//     *
-//     * @param httpExchange
-//     * @return
-//     */
-//    private String getRequestHeader(HttpExchange httpExchange) {
-//        Headers headers = httpExchange.getRequestHeaders();
-//        return headers.entrySet().stream()
-//                .map((Map.Entry<String, List<String>> entry) -> entry.getKey() + ":" + entry.getValue().toString())
-//                .collect(Collectors.joining("<br/>"));
-//    }
-
     /**
      * 获取请求参数
      *
@@ -76,16 +59,16 @@ public class OffWebHandler implements HttpHandler {
      * @throws Exception
      */
     private String getRequestParam(HttpExchange httpExchange) throws Exception {
-        String paramStr = "";
+        String paramStr;
 
-        if (httpExchange.getRequestMethod().equals("GET")) {
+        if ("GET".equals(httpExchange.getRequestMethod())) {
             //GET请求读queryString
             paramStr = httpExchange.getRequestURI().getQuery();
         } else {
             //非GET请求读请求体
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody(), "utf-8"));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpExchange.getRequestBody(), StandardCharsets.UTF_8));
             StringBuilder requestBodyContent = new StringBuilder();
-            String line = null;
+            String line;
             while ((line = bufferedReader.readLine()) != null) {
                 requestBodyContent.append(line);
             }
@@ -103,7 +86,8 @@ public class OffWebHandler implements HttpHandler {
      * @throws Exception
      */
     private void handleResponse(HttpExchange httpExchange, String responsetext) throws Exception {
-        byte[] responseContentByte = responsetext.getBytes("utf-8");
+        System.out.println("resp:"+responsetext);
+        byte[] responseContentByte = responsetext.getBytes(StandardCharsets.UTF_8);
         //设置响应头，必须在sendResponseHeaders方法之前设置！
         httpExchange.getResponseHeaders().add("Content-Type:", "application/json");
         //设置响应码和响应体长度，必须在getResponseBody方法之前调用！

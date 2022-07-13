@@ -2,7 +2,6 @@ package com.lalamove.huolala.offline.webview.monitor.base;
 
 import android.net.Uri;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

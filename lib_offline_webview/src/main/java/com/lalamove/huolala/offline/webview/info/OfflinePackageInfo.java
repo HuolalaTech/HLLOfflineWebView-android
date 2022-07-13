@@ -1,5 +1,7 @@
 package com.lalamove.huolala.offline.webview.info;
 
+import androidx.annotation.Keep;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,7 +13,7 @@ import java.util.Objects;
  * @description: 离线包接口返回数据体
  * @history:
  */
-
+@Keep
 public class OfflinePackageInfo implements Serializable {
 
 
@@ -85,10 +87,7 @@ public class OfflinePackageInfo implements Serializable {
     }
 
     public boolean isEnable() {
-        if (result == -1) {
-            return false;
-        }
-        return true;
+        return result != -1;
     }
 
     public boolean isSameVer() {

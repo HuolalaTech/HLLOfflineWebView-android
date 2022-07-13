@@ -13,6 +13,9 @@ import android.text.TextUtils;
 
 public class UrlParamsUtils {
 
+    private UrlParamsUtils() {
+    }
+
     /**
      * url后追加参数
      */

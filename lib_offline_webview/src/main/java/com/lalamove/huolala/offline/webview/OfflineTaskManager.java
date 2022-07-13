@@ -2,6 +2,7 @@ package com.lalamove.huolala.offline.webview;
 
 import android.text.TextUtils;
 
+import com.lalamove.huolala.offline.webview.resource.ResourceFlow;
 import com.lalamove.huolala.offline.webview.task.CheckAndUpdateTask;
 import com.lalamove.huolala.offline.webview.task.CheckVersionTask;
 import com.lalamove.huolala.offline.webview.task.CleanTask;
@@ -16,14 +17,16 @@ import com.lalamove.huolala.offline.webview.task.CleanTask;
  */
 
 public class OfflineTaskManager {
+    private OfflineTaskManager() {
+    }
 
     static void startInitTask() {
         OfflineConfig offlineConfig = OfflineWebManager.getInstance().getOfflineConfig();
         if (offlineConfig.isOpen()) {
             checkAllVersion();
-            if (offlineConfig.getPredownloadlist() != null && offlineConfig.getPredownloadlist().size() > 0) {
-                for (String bisName : offlineConfig.getPredownloadlist()) {
-                    checkPackage(bisName);
+            if (offlineConfig.getPreDownloadList() != null && offlineConfig.getPreDownloadList().size() > 0) {
+                for (String bisName : offlineConfig.getPreDownloadList()) {
+                    checkPackage(bisName, null);
                 }
             }
         }
@@ -41,11 +44,14 @@ public class OfflineTaskManager {
      *
      * @param bisName 业务名
      */
-    static void checkPackage(final String bisName) {
+    static void checkPackage(final String bisName,final ResourceFlow.FlowListener listener) {
         if (TextUtils.isEmpty(bisName)) {
+            if (listener!=null) {
+                listener.error(null,new IllegalStateException("bisName == null"));
+            }
             return;
         }
-        OfflineWebManager.getInstance().getExecutor().execute(new CheckAndUpdateTask(bisName));
+        OfflineWebManager.getInstance().getExecutor().execute(new CheckAndUpdateTask(bisName,listener));
     }
 
     /**

@@ -32,18 +32,25 @@ public class ParsePackageFlow implements ResourceFlow.IFlow {
     public void process() throws ResourceFlow.FlowException {
         try {
             //data/data/pkgName/offline_web/bisname/new
-            String unzipTempPath = OfflinePackageUtil.getBisDir(mResourceFlow.getPackageInfo().getBisName())
-                    + File.separator + OfflineConstant.TEMP_DIR_NAME;
-            String unzipNewPath = OfflinePackageUtil.getBisDir(mResourceFlow.getPackageInfo().getBisName())
-                    + File.separator + OfflineConstant.NEW_DIR_NAME;
+            String unzipTempPath = OfflineStringUtils.appendUnsafeString(
+                    OfflinePackageUtil.getBisDir(mResourceFlow.getPackageInfo().getBisName())
+                    , File.separator
+                    , OfflineConstant.TEMP_DIR_NAME);
+            String unzipNewPath = OfflineStringUtils.appendUnsafeString(
+                    OfflinePackageUtil.getBisDir(mResourceFlow.getPackageInfo().getBisName())
+                    , File.separator
+                    , OfflineConstant.NEW_DIR_NAME);
             mResourceFlow.getReportParams().unZipStart();
             //删除原temp
             File tempDir = new File(unzipTempPath);
             File newDir = new File(unzipNewPath);
             OfflineFileUtils.deleteDir(tempDir);
             //data/data/pkgName/offline_web/bisname/V1.zip
-            String zipPackagePath = OfflinePackageUtil.getBisDir(mResourceFlow.getPackageInfo().getBisName())
-                    + File.separator + mResourceFlow.getPackageInfo().getVersion() + OfflineConstant.ZIP_SUFFIX;
+            String zipPackagePath = OfflineStringUtils.appendUnsafeString(
+                    OfflinePackageUtil.getBisDir(mResourceFlow.getPackageInfo().getBisName())
+                    , File.separator
+                    , mResourceFlow.getPackageInfo().getVersion()
+                    , OfflineConstant.ZIP_SUFFIX);
             //解压
             List<File> files = OfflineFileUtils.unzipFile(zipPackagePath, unzipTempPath);
             //解压完毕 删除new

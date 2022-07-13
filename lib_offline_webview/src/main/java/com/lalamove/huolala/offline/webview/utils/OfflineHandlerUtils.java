@@ -18,6 +18,9 @@ public class OfflineHandlerUtils {
 
     private static Handler sHandler;
 
+    private OfflineHandlerUtils() {
+    }
+
     public static void runOnUiThread(Runnable action) {
         if (Looper.myLooper() != Looper.getMainLooper()) {
             if (sHandler == null) {

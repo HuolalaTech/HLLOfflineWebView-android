@@ -19,10 +19,9 @@ import java.util.List;
 
 public class OfflinePageManager {
     private static final String TAG = OfflinePageManager.class.getSimpleName();
-    private List<OfflineWebViewProxy> mLinkedList = Collections.synchronizedList(new LinkedList<OfflineWebViewProxy>());
+    private List<OfflineWebViewProxy> mLinkedList = Collections.synchronizedList(new LinkedList<>());
 
     public OfflinePageManager() {
-
     }
 
     public void addPage(OfflineWebViewProxy webView) {

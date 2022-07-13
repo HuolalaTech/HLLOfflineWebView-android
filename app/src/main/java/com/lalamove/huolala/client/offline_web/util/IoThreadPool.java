@@ -67,7 +67,7 @@ public class IoThreadPool {
         };
         mThreadPoolExecutor = new ThreadPoolExecutor(CORE_POOL_SIZE, Math.max(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE),
                 TIME_OUT, TimeUnit.SECONDS,
-                new LinkedBlockingDeque<Runnable>(128),
+                new LinkedBlockingDeque<>(128),
                 threadFactory);
         mThreadPoolExecutor.allowCoreThreadTimeOut(true);
         mThreadPoolExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy() {

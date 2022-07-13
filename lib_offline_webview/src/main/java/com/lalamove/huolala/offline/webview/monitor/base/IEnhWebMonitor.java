@@ -17,5 +17,5 @@ public interface IEnhWebMonitor {
     /**
      * 监控分析
      */
-    void monitorSummary(String name, float value, HashMap<String, String> labelMap, String extra);
+    void monitorSummary(String name, float value, HashMap<String, Object> labelMap, String extra);
 }
